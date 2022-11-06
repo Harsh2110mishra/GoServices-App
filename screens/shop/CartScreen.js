@@ -7,6 +7,7 @@ import {
   StyleSheet,
   ActivityIndicator,
   Image,
+  Platform,
 } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 
@@ -55,7 +56,13 @@ const CartScreen = (props) => {
           source={require("../../assets/bookingConfirmImage.png")}
         />
         <Text
-          style={{ fontSize: 20, fontFamily: "openSansBold", color: "green" }}
+          style={
+            Platform.OS === "ios"
+              ? { fontSize: 20, fontFamily: "openSansBold", color: "green" }
+              : {
+                  marginRight: 10,
+                }
+          }
         >
           Service Booked
         </Text>
@@ -82,21 +89,49 @@ const CartScreen = (props) => {
               customView={
                 <View>
                   <Image
-                    style={styles.image}
+                    style={
+                      Platform.OS === "ios"
+                        ? {
+                            height: 140,
+                            width: 140,
+                            marginLeft: 80,
+                            marginBottom: 20,
+                          }
+                        : {
+                            height: 140,
+                            width: 140,
+                            marginLeft: 50,
+                            marginBottom: 15,
+                          }
+                    }
                     source={require("../../assets/bookingConfirmImage.png")}
                   />
                   <Text
-                    style={{
-                      fontSize: 20,
-                      fontFamily: "openSansBold",
-                      color: "green",
-                      marginLeft: 70,
-                      marginBottom: 20,
-                    }}
+                    style={
+                      Platform.OS === "ios"
+                        ? {
+                            fontSize: 20,
+                            fontFamily: "openSansBold",
+                            color: "green",
+                            marginLeft: 70,
+                            marginBottom: 20,
+                          }
+                        : {
+                            fontSize: 20,
+                            fontFamily: "openSansBold",
+                            color: "green",
+                            marginLeft: 45,
+                            marginBottom: 10,
+                          }
+                    }
                   >
                     Service Booked
                   </Text>
-                  <Text style={{ margin: 2 }}>
+                  <Text
+                    style={
+                      Platform.OS === "ios" ? { margin: 2 } : { margin: 5 }
+                    }
+                  >
                     You have successfully booked the service for your device and
                     you will shortly recieve a call from service center for the
                     confirmation of booking.
@@ -158,12 +193,6 @@ CartScreen.navigationOptions = {
 const styles = StyleSheet.create({
   screen: {
     margin: 20,
-  },
-  image: {
-    height: 140,
-    width: 140,
-    marginLeft: 80,
-    marginBottom: 20,
   },
   summary: {
     flexDirection: "row",
