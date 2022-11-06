@@ -22,7 +22,7 @@ After the completion of installation of `node_modules`.
 $ cd node_modules/react-navigation-drawer/lib/module/views
 ```
 
-Replace interpolate with interpolateNode. It will be in two places, so make sure you change both of them.
+Replace `interpolate` with `interpolateNode`. It will be in two places, so make sure you change both of them.
 
 This issue will be resolve in upcoming version.
 
