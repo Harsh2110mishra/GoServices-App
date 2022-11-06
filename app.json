@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "goservices",
+    "name": "GoServices",
     "slug": "goservices",
     "version": "1.0.0",
     "owner": "harsh_mishra",
@@ -20,6 +20,7 @@
       "supportsTablet": true
     },
     "android": {
+      "package": "com.harshmishra.goservices",
       "adaptiveIcon": {
         "foregroundImage": "./assets/splashScreen.png",
         "backgroundColor": "#FFFFFF"
