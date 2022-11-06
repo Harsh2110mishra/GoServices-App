@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, Button, StyleSheet } from "react-native";
+import { View, Text, Button, StyleSheet, Platform } from "react-native";
 
 import StepIndicator from "react-native-step-indicator";
 
@@ -37,9 +37,13 @@ const OrderItem = (props) => {
     stepIndicatorLabelFinishedColor: "#ffffff",
     stepIndicatorLabelUnFinishedColor: "#aaaaaa",
     labelColor: "#999999",
-    labelSize: 13,
+    labelSize: 12.5,
     currentStepLabelColor: "#fe7013",
   };
+
+  if (Platform.OS === "android") {
+    customStyles.labelSize = 11.5;
+  }
 
   return (
     <Card style={styles.orderItem}>
