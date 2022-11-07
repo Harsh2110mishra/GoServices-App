@@ -123,6 +123,7 @@ const ProductOverviewScreen = (props) => {
               title="Book"
               onPress={() => {
                 addToCartHandler(itemData);
+                props.navigation.navigate("Cart");
               }}
             />
           )}
