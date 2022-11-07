@@ -2,7 +2,7 @@
   "expo": {
     "name": "GoServices",
     "slug": "goservices",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "owner": "harsh_mishra",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
