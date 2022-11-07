@@ -28,6 +28,7 @@ const ProductDetailScreen = (props) => {
           title="Book this service"
           onPress={() => {
             dispatch(cartActions.addToCart(selectedProduct));
+            props.navigation.navigate("Cart");
           }}
         />
       </View>
