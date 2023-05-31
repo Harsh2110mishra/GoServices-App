@@ -6,6 +6,7 @@ import {
   Text,
   StyleSheet,
   Platform,
+  TextInput,
   ActivityIndicator,
 } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
@@ -21,7 +22,9 @@ const ProductOverviewScreen = (props) => {
   const [IsLoading, setIsLoading] = useState(true);
   const [IsRefreshing, setIsRefreshing] = useState(false);
   const [error, setError] = useState();
+  const [searchText, setSearchText] = useState();
   const products = useSelector((state) => state.products.availableProducts);
+  const [filteredProducts, setFilteredProducts] = useState(products);
   const dispatch = useDispatch();
 
   const loadedProducts = useCallback(async () => {
@@ -34,6 +37,10 @@ const ProductOverviewScreen = (props) => {
       });
     setIsRefreshing(false);
   }, [dispatch, setIsLoading, setError]);
+
+  useEffect(() => {
+    setFilteredProducts(products);
+  });
 
   useEffect(() => {
     const willFocusSub = props.navigation.addListener(
@@ -62,6 +69,19 @@ const ProductOverviewScreen = (props) => {
     setIsLoading(true);
     await dispatch(cartActions.addToCart(itemData.item));
     setIsLoading(false);
+  };
+
+  const handleSearch = (text) => {
+    if (!text || text === " ") {
+      setSearchText(text);
+      setFilteredProducts(products);
+    } else {
+      const filtered = products.filter((item) =>
+        item.title.toLowerCase().includes(text.toLowerCase())
+      );
+      setFilteredProducts(filtered);
+      setSearchText(text);
+    }
   };
 
   /* if (error) {
@@ -93,43 +113,59 @@ const ProductOverviewScreen = (props) => {
       </View>
     );
   }
-
   return (
-    <FlatList
-      data={products}
-      onRefresh={loadedProducts}
-      refreshing={IsRefreshing}
-      renderItem={(itemData) => (
-        <ProductItem
-          image={itemData.item.imageUrl}
-          title={itemData.item.title}
-          price={itemData.item.price}
-          onSelect={() => {
-            selectItemHandler(itemData.item.id, itemData.item.title);
-          }}
-        >
-          <Button
-            color={Colors.primary}
-            title="View Details"
-            onPress={() => {
+    <View>
+      <View
+        style={{
+          backgroundColor: "#FFFF",
+          padding: 8,
+          marginHorizontal: 10,
+          marginVertical: 10,
+        }}
+      >
+        <TextInput
+          style={styles.searchInput}
+          placeholder="Search for a person or profession..."
+          value={searchText}
+          onChangeText={handleSearch}
+        />
+      </View>
+      <FlatList
+        data={filteredProducts}
+        onRefresh={loadedProducts}
+        refreshing={IsRefreshing}
+        renderItem={(itemData) => (
+          <ProductItem
+            image={itemData.item.imageUrl}
+            title={itemData.item.title}
+            price={itemData.item.price}
+            onSelect={() => {
               selectItemHandler(itemData.item.id, itemData.item.title);
             }}
-          />
-          {IsLoading ? (
-            <ActivityIndicator size="small" color={Colors.primary} />
-          ) : (
+          >
             <Button
               color={Colors.primary}
-              title="Book"
+              title="View Details"
               onPress={() => {
-                addToCartHandler(itemData);
-                props.navigation.navigate("Cart");
+                selectItemHandler(itemData.item.id, itemData.item.title);
               }}
             />
-          )}
-        </ProductItem>
-      )}
-    />
+            {IsLoading ? (
+              <ActivityIndicator size="small" color={Colors.primary} />
+            ) : (
+              <Button
+                color={Colors.primary}
+                title="Book"
+                onPress={() => {
+                  addToCartHandler(itemData);
+                  props.navigation.navigate("Cart");
+                }}
+              />
+            )}
+          </ProductItem>
+        )}
+      />
+    </View>
   );
 };
 
