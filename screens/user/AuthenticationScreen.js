@@ -7,6 +7,7 @@ import {
   StyleSheet,
   ActivityIndicator,
   Alert,
+  TextInput,
 } from "react-native";
 import { useDispatch } from "react-redux";
 
@@ -44,6 +45,7 @@ const AuthenticationScreen = (props) => {
   const [Isloading, setIsloading] = useState(false);
   const [error, setError] = useState();
   const [IsSignup, setIsSignup] = useState(false);
+  const [password, setPassword] = useState(null);
   const dispatch = useDispatch();
 
   const [formState, dispatchFormState] = useReducer(formReducer, {
@@ -61,15 +63,9 @@ const AuthenticationScreen = (props) => {
   const authHandler = async () => {
     let action;
     if (IsSignup) {
-      action = authActions.signup(
-        formState.inputValues.email,
-        formState.inputValues.password
-      );
+      action = authActions.signup(formState.inputValues.email, password);
     } else {
-      action = authActions.login(
-        formState.inputValues.email,
-        formState.inputValues.password
-      );
+      action = authActions.login(formState.inputValues.email, password);
     }
     setError(null);
     setIsloading(true);
@@ -118,18 +114,24 @@ const AuthenticationScreen = (props) => {
             onInputChange={inputChangeHandler}
             intialValue=""
           />
-          <Input
-            id="password"
-            label="Password"
-            keyboardType="default"
-            secureTextEntry
-            required
-            minLength={5}
-            autoCapitalize="none"
-            warningText="Please enter valid Password"
-            onInputChange={inputChangeHandler}
-            intialValue=""
-          />
+          <View
+            style={{
+              backgroundColor: "#FFFF",
+              marginTop: 20,
+            }}
+          >
+            <TextInput
+              style={{ borderBottomColor: "#ccc" }}
+              placeholder="Password"
+              value={password}
+              secureTextEntry
+              autoCapitalize="none"
+              onChangeText={(text) => {
+                setPassword(text);
+              }}
+            />
+          </View>
+
           <View style={styles.buttonContainer}>
             <View style={styles.button}>
               {Isloading ? (
