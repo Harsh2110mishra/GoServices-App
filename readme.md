@@ -26,6 +26,12 @@ Replace `interpolate` with `interpolateNode`. It will be in two places, so make 
 
 This issue will be resolve in upcoming version.
 
+## For Signed APK
+
+Before running below command make sure to comment `keysConstants.js` in gitignore file as it must be in the build.
+
+run `eas build --platform android --profile development`
+
 ## Support
 
 Reach out to me at one of the following places!
