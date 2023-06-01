@@ -24,7 +24,7 @@ const ProductOverviewScreen = (props) => {
   const [error, setError] = useState();
   const [searchText, setSearchText] = useState();
   const products = useSelector((state) => state.products.availableProducts);
-  const [filteredProducts, setFilteredProducts] = useState(products);
+  const [filteredProducts, setFilteredProducts] = useState();
   const dispatch = useDispatch();
 
   const loadedProducts = useCallback(async () => {
@@ -37,10 +37,6 @@ const ProductOverviewScreen = (props) => {
       });
     setIsRefreshing(false);
   }, [dispatch, setIsLoading, setError]);
-
-  useEffect(() => {
-    setFilteredProducts(products);
-  });
 
   useEffect(() => {
     const willFocusSub = props.navigation.addListener(
@@ -79,6 +75,7 @@ const ProductOverviewScreen = (props) => {
       const filtered = products.filter((item) =>
         item.title.toLowerCase().includes(text.toLowerCase())
       );
+      console.log(filtered);
       setFilteredProducts(filtered);
       setSearchText(text);
     }
@@ -131,7 +128,7 @@ const ProductOverviewScreen = (props) => {
         />
       </View>
       <FlatList
-        data={filteredProducts}
+        data={filteredProducts || products}
         onRefresh={loadedProducts}
         refreshing={IsRefreshing}
         renderItem={(itemData) => (
