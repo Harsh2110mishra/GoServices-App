@@ -122,7 +122,7 @@ const ProductOverviewScreen = (props) => {
       >
         <TextInput
           style={styles.searchInput}
-          placeholder="Search for a person or profession..."
+          placeholder="Search for services..."
           value={searchText}
           onChangeText={handleSearch}
         />
